@@ -65,11 +65,15 @@ plt.figure()
 plt.scatter(lstat, ye_preds)
 
 plt.figure()
+plt.plot(losses)
+
+plt.figure()
 plt.scatter(lstat, y_train)
 
 
 plt.figure()
 plt.scatter(ptratio, y_train)
+plt.scatter(ptratio, ye_preds, c='Red')
 
 plt.show()
 
