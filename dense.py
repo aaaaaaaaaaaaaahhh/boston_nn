@@ -28,9 +28,9 @@ class FC_layer:
         return self.z
 
     def backward(self, dLdZ, learning_rate=.01):  # dLdZ is of size m(l+1) by n(l+1)
-        #print("shape of weights, in linear", np.shape(self.weights))
-        #print("shape of dLdZ, in linear", np.shape(dLdZ))
-        #print("shape of x, in linear", np.shape(self.x))
+        print("shape of weights, in linear", np.shape(self.weights))
+        print("shape of dLdZ, in linear", np.shape(dLdZ))
+        print("shape of x, in linear", np.shape(self.x))
         #print("shape of biases, in linear", np.shape(self.biases))
         self.dLdA = self.weights.T@dLdZ
         self.dLdW = (dLdZ@self.x.T)
