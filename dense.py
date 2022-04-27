@@ -15,8 +15,8 @@ class FC_layer:
         self.d, self.n = input_size  # d is number of dimensions to the data and n is the number of data points
         # being fed through(batch size)
         self.m = nodes  # number of nodes
-        self.weights = np.random.randn(self.m, self.d)  # d by m
-        self.biases = np.zeros((self.m, 1))
+        self.weights = np.random.randn(self.n, self.m)  # d by m
+        self.biases = np.zeros((1, self.m))
         self.z = None
         self.dLdA = None  # d by n, A is the inputs to the layer
         self.dLdW = None  # d by n
@@ -24,23 +24,23 @@ class FC_layer:
 
     def forward(self, input):  # dLdZ is of size m(l+1) by n(l+1)
         self.x = input
-        self.z = (self.weights @ self.x) + self.biases # the reshape is to make the array compatible with the biases. only
+        self.z = (self.x @ self.weights) + self.biases # the reshape is to make the array compatible with the biases. only
         return self.z
 
     def backward(self, dLdZ, learning_rate=.01):  # dLdZ is of size m(l+1) by n(l+1)
-        print("shape of weights, in linear", np.shape(self.weights))
-        print("shape of dLdZ, in linear", np.shape(dLdZ))
-        print("shape of x, in linear", np.shape(self.x))
+        #print("shape of dLdZ, in linear", np.shape(dLdZ))
         #print("shape of biases, in linear", np.shape(self.biases))
-        self.dLdA = self.weights.T@dLdZ
-        self.dLdW = (dLdZ@self.x.T)
+        #print("shape of weights, in linear", np.shape(self.weights))
+        #print("shape of x, in linear", np.shape(self.x))
+        self.dLdA = np.dot(dLdZ, self.weights.T)
+        self.dLdW = (self.x.T @ dLdZ)
         self.dLdW0 = dLdZ  # m by n (same size as dLdZ)
         #print("dldw", self.dLdW)
+        #print("shape of dLdA, in linear", np.shape(self.dLdA))
         #print("shape of dLdW0, in linear", np.shape(self.dLdW0))
         #print("shape of dLdW, in linear", np.shape(self.dLdW))
         self.weights -= learning_rate*self.dLdW
         self.biases -= learning_rate*self.dLdW0
-
         return self.dLdA  # d by n
 
 '''
