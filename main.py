@@ -36,7 +36,7 @@ e = 50
 y_preds = []
 losses = []
 epochs = []
-l1_w = layer_1.weights
+l1_w = layer_3.weights
 for i in range(e):
     ye_preds = []
     for l in range(np.shape(x_train)[0]):
@@ -57,6 +57,7 @@ for i in range(e):
     epochs.append(i)
 
     l_prime = final_loss.mean_squared_error_prime(ye_preds, 404)
+    print(np.shape(l_prime))
     l_prime = np.reshape(l_prime, (1, 1))
 
     layer_3_back = layer_3.backward(l_prime, .01)
@@ -65,7 +66,10 @@ for i in range(e):
     layer_2_back = layer_2.backward(layer_2_activation_back, .01)
     layer_1_activation_back = layer_1_activation.backward(layer_2_back)
     layer_1_back = layer_1.backward(layer_1_activation_back, .01)
-    layer_1_dw = layer_3.dLdW
+    print("")
+    print("dLdZ", layer_1.dLdZ)
+    print("x", layer_1.x)
+    print("dLdW", layer_1.dLdW)
 
 plt.figure()
 plt.scatter(lstat, ye_preds)
@@ -73,7 +77,6 @@ plt.scatter(lstat, ye_preds)
 plt.figure()
 plt.plot(epochs, losses)
 print(losses)
-print(layer_1_dw)
 
 plt.figure()
 plt.scatter(lstat, y_train)

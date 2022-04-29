@@ -15,8 +15,8 @@ class FC_layer:
         self.d, self.n = input_size  # d is number of dimensions to the data and n is the number of data points
         # being fed through(batch size)
         self.m = nodes  # number of nodes
-        self.weights = np.random.randn(self.n, self.m)  # d by m
-        self.biases = np.zeros((1, self.m))
+        self.weights = np.random.randn(self.n, self.m) -.5 # d by m
+        self.biases = np.random.randn(1, self.m) -.5
         self.z = None
         self.dLdA = None  # d by n, A is the inputs to the layer
         self.dLdW = None  # d by n
@@ -28,6 +28,7 @@ class FC_layer:
         return self.z
 
     def backward(self, dLdZ, learning_rate=.01):  # dLdZ is of size m(l+1) by n(l+1)
+        self.dLdZ = dLdZ
         #print("shape of dLdZ, in linear", np.shape(dLdZ))
         #print("shape of biases, in linear", np.shape(self.biases))
         #print("shape of weights, in linear", np.shape(self.weights))
