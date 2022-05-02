@@ -3,7 +3,7 @@ import numpy as np
 
 class relu:
     def forward(self, input):
-        return np.maximum(0, input)
+        return np.maximum(0.0001, input)
 
     def backward(self, dLdA):
         return np.where(dLdA>= 0, 1, 0)

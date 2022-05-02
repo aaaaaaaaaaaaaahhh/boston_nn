@@ -22,4 +22,4 @@ class loss:
         return (np.sum((self.y-y_pred)**2, 0))/n
 
     def mean_squared_error_prime(self, y_pred, n):
-        return (2*(self.y-y_pred))/n
+        return (2*np.sum(y_pred-self.y, 0))/n

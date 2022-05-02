@@ -15,8 +15,8 @@ class FC_layer:
         self.d, self.n = input_size  # d is number of dimensions to the data and n is the number of data points
         # being fed through(batch size)
         self.m = nodes  # number of nodes
-        self.weights = np.random.randn(self.n, self.m) -.5 # d by m
-        self.biases = np.random.randn(1, self.m) -.5
+        self.weights = np.random.randn(self.n, self.m) # d by m
+        self.biases = np.random.randn(1, self.m)
         self.z = None
         self.dLdA = None  # d by n, A is the inputs to the layer
         self.dLdW = None  # d by n
