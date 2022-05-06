@@ -39,7 +39,6 @@ losses = []
 epochs = []
 l1_w = layer_3.weights
 for i in range(e):
-    ye_preds = []
 
     layer_1_out = layer_1.forward(x_train)
     layer_1_w = layer_1.weights
@@ -49,12 +48,8 @@ for i in range(e):
     layer_3_out = layer_3.forward(layer_2_activation_out)
     prediction = layer_3_activation.forward(layer_3_out)
 
-    #prediction = prediction.item()
-
     y_preds.append(prediction)
-    ye_preds.append(prediction)
-    ye_preds = np.reshape(ye_preds, (404, 1))
-    loss = final_loss.root_mean_squared_error(ye_preds, 404)
+    loss = final_loss.root_mean_squared_error(prediction, 404)
     losses.append(loss)
     epochs.append(i)
 
