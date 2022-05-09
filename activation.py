@@ -6,7 +6,7 @@ class relu:
         return np.maximum(0.0001, input)
 
     def backward(self, dLdA):
-        return np.where(dLdA>= 0, 1, 0)
+        return np.multiply(dLdA, np.where(dLdA>= 0, 1, 0))
 
 
 class softmax:

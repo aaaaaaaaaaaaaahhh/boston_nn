@@ -38,6 +38,8 @@ y_preds = []
 losses = []
 epochs = []
 l1_w = layer_3.weights
+n = len(y_train)
+
 for i in range(e):
 
     layer_1_out = layer_1.forward(x_train)
@@ -57,14 +59,14 @@ for i in range(e):
 
     layer_3_output = l_prime
     layer_3_input = layer_3.x
-    print(np.shape(layer_3_input), np.shape(layer_3_output))
 
-    layer_3_back = layer_3.backward(l_prime, .001)
+
+    layer_3_back = layer_3.backward(l_prime, .03)
+    #print(layer_3.dLdW)
     layer_2_activation_back = layer_2_activation.backward(layer_3_back)
-    layer_2_activation_back = np.reshape(layer_2_activation_back, (1, 13))
-    layer_2_back = layer_2.backward(layer_2_activation_back, .001)
+    layer_2_back = layer_2.backward(layer_2_activation_back, .03)
     layer_1_activation_back = layer_1_activation.backward(layer_2_back)
-    layer_1_back = layer_1.backward(layer_1_activation_back, .001)
+    layer_1_back = layer_1.backward(layer_1_activation_back, .03)
     '''print("")
     print("dLdZ ", i, " ", layer_3.dLdZ)
     print("dLdA ", i, " ", layer_3.dLdA)
@@ -76,8 +78,10 @@ for i in range(e):
 
 print(np.shape(layer_3_input), np.shape(layer_3_output))
 
+#print(y_preds[-1])
+
 plt.figure()
-plt.scatter(lstat, ye_preds)
+plt.scatter(lstat, y_preds[-1])
 
 plt.figure()
 plt.plot(epochs, losses)
@@ -91,7 +95,7 @@ plt.figure()
 plt.scatter(ptratio, y_train)
 
 plt.figure()
-plt.scatter(ptratio, ye_preds, c='Red')
+plt.scatter(ptratio, y_preds[-1], c='Red')
 
 plt.show()
 
