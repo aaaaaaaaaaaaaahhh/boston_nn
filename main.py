@@ -25,11 +25,11 @@ y_train_shaped = np.reshape(y_train, (404, 1))
 #-------------------------------------------------Training network------------------------------------------------------
 
 
-layer_1 = dense.FC_layer(2, 15)
+layer_1 = dense.FC_layer(2, 5)
 layer_1_activation = activation.relu()
-layer_2 = dense.FC_layer(15, 13)
+layer_2 = dense.FC_layer(5, 5)
 layer_2_activation = activation.relu()
-layer_3 = dense.FC_layer(13, 1)
+layer_3 = dense.FC_layer(5, 1)
 layer_3_activation = activation.linear()
 final_loss = loss.loss(y_train_shaped)
 
@@ -79,13 +79,14 @@ for i in range(e):
 print(np.shape(layer_3_input), np.shape(layer_3_output))
 
 #print(y_preds[-1])
+#print(y_preds[-2])
 
 plt.figure()
 plt.scatter(lstat, y_preds[-1])
 
 plt.figure()
 plt.plot(epochs, losses)
-print(losses)
+#print(losses)
 
 plt.figure()
 plt.scatter(lstat, y_train)

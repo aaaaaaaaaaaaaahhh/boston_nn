@@ -31,7 +31,7 @@ class FC_layer:
         #print("shape of x, in linear", np.shape(self.x))
         self.dLdA = np.dot(output_error, self.weights.T)
         self.dLdW = (self.x.T @ output_error)
-        self.dLdW0 = np.sum(output_error, axis=0, keepdims=True) * 1/n # m by n (same size as dLdZ)
+        self.dLdW0 = np.sum(output_error, axis=0, keepdims=True) * (-1/n) # m by n (same size as dLdZ)
         #print("dldw", self.dLdW)
         #print("shape of dLdA, in linear", np.shape(self.dLdA))
         #print("shape of dLdW0, in linear", np.shape(self.dLdW0))
