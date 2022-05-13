@@ -16,6 +16,7 @@ class loss:
         return dLdY
 
     def root_mean_squared_error(self, y_pred, n):
+        print(y_pred)
         return math.sqrt((np.sum((self.y-y_pred)**2, 0))/n)
 
     def mean_squared_error(self, y_pred, n): # y_pred should be an array of all the predicted values in one epoch and y should be their corresponding actual values

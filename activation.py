@@ -3,10 +3,11 @@ import numpy as np
 
 class relu:
     def forward(self, input):
+        self.input = input
         return np.maximum(0.0001, input)
 
     def backward(self, dLdA):
-        return np.multiply(dLdA, np.where(dLdA>= 0, 1, 0))
+        return np.where(self.input>= 0, 1, 0) * dLdA
 
 
 class softmax:
