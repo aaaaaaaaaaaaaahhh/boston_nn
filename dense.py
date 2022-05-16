@@ -15,12 +15,12 @@ class FC_layer:
         # d is number of dimensions to the data and n is the number of data points
         # being fed through(batch size)
         self.m = nodes  # number of nodes
-        self.weights = np.random.randn(input_size, nodes)# d by m
-        self.biases = np.random.randn(1, nodes)
+        self.weights = np.random.randn(nodes, input_size)# d by m
+        self.biases = np.random.randn(nodes, 1)
 
     def forward(self, input):  # dLdZ is of size m(l+1) by n(l+1)
         self.x = input
-        self.z = np.dot(self.x, self.weights) + self.biases # the reshape is to make the array compatible with the biases. only
+        self.z = np.dot(self.weights, self.x) + self.biases # the reshape is to make the array compatible with the biases. only
         return self.z
 
     def backward(self, output_error, learning_rate=.01):  # dLdZ is of size m(l+1) by n(l+1)
@@ -29,9 +29,9 @@ class FC_layer:
         #print("shape of biases, in linear", np.shape(self.biases))
         #print("shape of weights, in linear", np.shape(self.weights))
         #print("shape of x, in linear", np.shape(self.x))
-        self.dLdA = np.dot(output_error, self.weights.T)
-        self.dLdW = np.dot(self.x.T, output_error)
-        self.dLdW0 = np.sum(output_error, axis=0, keepdims=True) * (-1/n) # m by n (same size as dLdZ)
+        self.dLdA = np.dot(self.weights.T, output_error)
+        self.dLdW = np.dot(output_error, self.x.T)
+        self.dLdW0 = np.sum(output_error, axis=1, keepdims=True) # m by n (same size as dLdZ)
         #print("dldw", self.dLdW)
         #print("shape of dLdA, in linear", np.shape(self.dLdA))
         #print("shape of dLdW0, in linear", np.shape(self.dLdW0))

@@ -31,7 +31,7 @@ layer_2 = dense.FC_layer(5, 5)
 layer_2_activation = activation.relu()
 layer_3 = dense.FC_layer(5, 1)
 layer_3_activation = activation.linear()
-final_loss = loss.loss(y_train_shaped)
+final_loss = loss.loss()
 
 e = 1000
 y_preds = []
@@ -41,51 +41,55 @@ l1_w = layer_3.weights
 n = len(y_train)
 
 for i in range(e):
-    print("beginning x", x_train)
-    layer_1_out = layer_1.forward(x_train)
-    print("layer1 out", layer_1_out)
-    layer_1_w = layer_1.weights
-    layer_1_activation_out = layer_1_activation.forward(layer_1_out)
-    print("layer1 activation out", layer_1_activation_out)
-    layer_2_out = layer_2.forward(layer_1_activation_out)
-    print("layer2 out", layer_2_out)
-    layer_2_activation_out = layer_2_activation.forward(layer_2_out)
-    print("layer2 activation out", layer_2_activation_out)
-    layer_3_out = layer_3.forward(layer_2_activation_out)
-    print("layer3 out", layer_3_out)
-    prediction = layer_3_activation.forward(layer_3_out)
-    print("layer3 activation out", prediction)
+    for x in range(np.shape(x_train)[0]):
+        x_initial = np.reshape(x_train[x, :], (2, 1))
+        y = y_train[x]
+
+        print("beginning x", x_initial)
+        layer_1_out = layer_1.forward(x)
+        print("layer1 out", layer_1_out)
+        layer_1_w = layer_1.weights
+        layer_1_activation_out = layer_1_activation.forward(layer_1_out)
+        print("layer1 activation out", layer_1_activation_out)
+        layer_2_out = layer_2.forward(layer_1_activation_out)
+        print("layer2 out", layer_2_out)
+        layer_2_activation_out = layer_2_activation.forward(layer_2_out)
+        print("layer2 activation out", layer_2_activation_out)
+        layer_3_out = layer_3.forward(layer_2_activation_out)
+        print("layer3 out", layer_3_out)
+        prediction = layer_3_activation.forward(layer_3_out)
+        print("layer3 activation out", prediction)
 
 
-    y_preds.append(prediction)
-    loss = final_loss.root_mean_squared_error(prediction, 404)
-    losses.append(loss)
-    epochs.append(i)
+        y_preds.append(prediction)
+        loss = final_loss.mean_squared_error(prediction, y)
+        losses.append(loss)
+        epochs.append(i)
 
-    l_prime = final_loss.mean_squared_error_prime(prediction, 404)
+        l_prime = final_loss.mean_squared_error_prime(prediction, y)
 
-    layer_3_output = l_prime
-    layer_3_input = layer_3.x
+        layer_3_output = l_prime
+        layer_3_input = layer_3.x
 
-    print("thing", np.dot(layer_3.x.T, l_prime))
-    layer_3_back = layer_3.backward(l_prime, .03)
-    print("layer3 weight changes", layer_3.dLdW)
-    print("layer3 x", layer_3.x)
-    layer_2_activation_back = layer_2_activation.backward(layer_3_back)
-    print("layer2 back", layer_2_activation_back)
-    layer_2_back = layer_2.backward(layer_2_activation_back, .03)
-    print("layer2 weight changes", layer_2.dLdW)
-    layer_1_activation_back = layer_1_activation.backward(layer_2_back)
-    layer_1_back = layer_1.backward(layer_1_activation_back, .03)
-    print("layer1 weight changes", layer_1.dLdW)
-    '''print("")
-    print("dLdZ ", i, " ", layer_3.dLdZ)
-    print("dLdA ", i, " ", layer_3.dLdA)
-    print("z ", i, " ", layer_3.z)
-    print("x ", i, " ", layer_3.x)
-    print("weights ", i, " ", layer_3.weights)
-    print("biases ", i, " ", layer_3.biases)
-    print("dLdW ", i, " ", layer_3.dLdW)'''
+        print("thing", np.dot(layer_3.x.T, l_prime))
+        layer_3_back = layer_3.backward(l_prime, .03)
+        print("layer3 weight changes", layer_3.dLdW)
+        print("layer3 x", layer_3.x)
+        layer_2_activation_back = layer_2_activation.backward(layer_3_back)
+        print("layer2 back", layer_2_activation_back)
+        layer_2_back = layer_2.backward(layer_2_activation_back, .03)
+        print("layer2 weight changes", layer_2.dLdW)
+        layer_1_activation_back = layer_1_activation.backward(layer_2_back)
+        layer_1_back = layer_1.backward(layer_1_activation_back, .03)
+        print("layer1 weight changes", layer_1.dLdW)
+        '''print("")
+        print("dLdZ ", i, " ", layer_3.dLdZ)
+        print("dLdA ", i, " ", layer_3.dLdA)
+        print("z ", i, " ", layer_3.z)
+        print("x ", i, " ", layer_3.x)
+        print("weights ", i, " ", layer_3.weights)
+        print("biases ", i, " ", layer_3.biases)
+        print("dLdW ", i, " ", layer_3.dLdW)'''
 
 print(np.shape(layer_3_input), np.shape(layer_3_output))
 

@@ -2,8 +2,6 @@ import numpy as np
 import math
 
 class loss:
-    def __init__(self, y):
-        self.y = y
 
     def cross_entropy(self, y_pred):
         self.y_pred = y_pred
@@ -15,12 +13,11 @@ class loss:
         dLdY = y_pred - self.y
         return dLdY
 
-    def root_mean_squared_error(self, y_pred, n):
-        return math.sqrt((np.sum((self.y-y_pred)**2, 0))/n)
+    def root_mean_squared_error(self, y_pred, y, n):
+        return math.sqrt((np.sum((y-y_pred)**2, 0))/n)
 
-    def mean_squared_error(self, y_pred, n): # y_pred should be an array of all the predicted values in one epoch and y should be their corresponding actual values
-        return np.mean(np.power(self.y-y_pred, 2))
+    def mean_squared_error(self, y_pred, y): # y_pred should be an array of all the predicted values in one epoch and y should be their corresponding actual values
+        return np.mean(np.power(y - y_pred, 2))
 
-    def mean_squared_error_prime(self, y_pred, n):
-        print(2*(y_pred-self.y)/n)
-        return 2*(y_pred-self.y)/n
+    def mean_squared_error_prime(self, y_pred, y):
+        return 2 * (y_pred - y) / np.size(y)
