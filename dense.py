@@ -18,7 +18,7 @@ class FC_layer:
         self.weights = np.random.randn(nodes, input_size)# d by m
         self.biases = np.random.randn(nodes, 1)
 
-    def forward(self, input):  # dLdZ is of size m(l+1) by n(l+1)
+    def forward(self, input):
         self.x = input
         self.z = np.dot(self.weights, self.x) + self.biases # the reshape is to make the array compatible with the biases. only
         return self.z
