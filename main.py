@@ -50,7 +50,7 @@ n = len(y_train)
 def predict(network, input):
     output = input
     for layer in network:
-        output = layer.forward(output)
+        output = layer.forward(output, .03)
     return output
 
 
@@ -60,7 +60,7 @@ for i in range(e):
         x_initial = np.reshape(x_train[x, :], (2, 1))
         y = y_train[x]
 
-        output = predict(network, x)
+        output = predict(network, x_initial)
 
         # error
         error += final_loss.mean_squared_error(output, y)
