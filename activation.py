@@ -4,11 +4,11 @@ import numpy as np
 class relu:
     def forward(self, input, lr):
         self.input = input
-        self.A = np.maximum(0, input)
+        self.A = np.maximum(0.000001, input)
         return self.A
 
     def backward(self, dLdA, lr):
-        return dLdA * (self.A != 0)
+        return dLdA * (self.A != 0.000001)
 
 
 class softmax:
@@ -28,3 +28,11 @@ class linear:
 
     def backward(self, input, lr):
         return 1
+
+
+class tanh:
+    def forward(self, input, lr):
+        return np.tanh(input)
+
+    def backward(self, input, lr):
+        return 1 - np.tanh(input) ** 2

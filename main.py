@@ -122,6 +122,7 @@ plt.figure()
 plt.scatter(lstat, y_preds, c="Red")
 plt.scatter(lstat, y_train)
 
+print(epochs)
 plt.figure()
 plt.plot(epochs, losses)
 print(losses)
