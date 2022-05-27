@@ -56,21 +56,22 @@ def predict(network, input):
 
 for i in range(e):
     error = 0
+    '''
     for x in range(np.shape(x_train)[0]):
         x_initial = np.reshape(x_train[x, :], (2, 1))
-        y = y_train[x]
+        y = y_train[x]'''
 
-        output = predict(network, x_initial)
+    output = predict(network, x_train.T)
 
-        # error
-        error += final_loss.mean_squared_error(output, y)
-        losses.append(error)
-        epochs.append(e)
+    # error
+    error += final_loss.mean_squared_error(output, y_train.T)
+    losses.append(error)
+    epochs.append(e)
 
-        # backward
-        grad = final_loss.mean_squared_error_prime(output, y)
-        for layer in reversed(network):
-            grad = layer.backward(grad, .03)
+    # backward
+    grad = final_loss.mean_squared_error_prime(output, y_train.T)
+    for layer in reversed(network):
+        grad = layer.backward(grad, .03)
 
 
         '''

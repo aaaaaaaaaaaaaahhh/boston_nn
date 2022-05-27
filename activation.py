@@ -27,7 +27,7 @@ class linear:
         return input
 
     def backward(self, input, lr):
-        return 1
+        return np.ones(input.shape, dtype=float)
 
 
 class tanh:
