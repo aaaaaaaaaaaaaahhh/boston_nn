@@ -70,8 +70,10 @@ for i in range(e):
 
     # backward
     grad = final_loss.mean_squared_error_prime(output, y_train.T)
+    layer_num = len(network)
     for layer in reversed(network):
-        grad = layer.backward(grad, i, .03)
+        grad = layer.backward(grad, i, layer_num, network, y_train_shaped, .03)
+        layer_num = layer_num - 1
 
 
         '''

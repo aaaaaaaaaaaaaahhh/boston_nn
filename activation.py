@@ -7,7 +7,7 @@ class relu:
         self.A = np.maximum(0.000001, input)
         return self.A
 
-    def backward(self, dLdA, epoch, lr):
+    def backward(self, dLdA, epoch, layer_num, network, y_train_shaped, lr):
         return dLdA * (self.A != 0.000001)
 
 
@@ -26,7 +26,7 @@ class linear:
     def forward(self, input, lr):
         return input
 
-    def backward(self, input, epoch, lr):
+    def backward(self, input, epoch, layer_num, network, y_train_shaped, lr):
         return np.ones(input.shape, dtype=float)
 
 

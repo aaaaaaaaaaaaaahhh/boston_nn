@@ -1,4 +1,5 @@
 import numpy as np
+import activation
 
 # if you dont get any of the derivation, dont worry i dont really get them either.
 # go to https://openlearninglibrary.mit.edu/courses/course-v1:MITx+6.036+1T2019/courseware/Week7/week7_homework/?activate_block_id=block-v1%3AMITx%2B6.036%2B1T2019%2Btype%40sequential%2Bblock%40week7_homework
@@ -23,15 +24,21 @@ class FC_layer:
         self.z = np.dot(self.weights, self.x) + self.biases # the reshape is to make the array compatible with the biases. only
         return self.z
 
-    def backward(self, output_error, epoch, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
+    def backward(self, output_error, epoch, layer, network, y_train, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
         #print("shape of output error, in linear", np.shape(output_error))
         #print("shape of biases, in linear", np.shape(self.biases))
         #print("shape of weights, in linear", np.shape(self.weights))
         #print("shape of x, in linear", np.shape(self.x))
-        self.dLdA = np.dot(self.weights.T, output_error)
+        layers = len(network)
+        m = len(y_train)
+        if layer == layers:
+            self.dldA = 1/m * (activation.relu.forward(self.z, .03) - y_train)
+        else:
+            self.dLdA = np.dot(self.weights.T, output_error)
+
         self.dLdW = np.dot(output_error, self.x.T)
         self.dLdW0 = np.sum(output_error, axis=1, keepdims=True)# m by n (same size as dLdZ)
-        print("dLdW", epoch, self.dLdW)
+        print("dLdW", epoch, layer, self.dLdW)
         print("dLdA", epoch, self.dLdA)
         print("dLdW0", epoch, self.dLdW0)
         #self.dLdW0 = output_error
