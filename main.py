@@ -3,36 +3,44 @@ import dense
 import activation
 import loss
 
+from sklearn.datasets import load_boston
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.datasets import boston_housing
 import matplotlib.pyplot as plt
 
 
 #----------------------------------------------Preprocessing data-------------------------------------------------------
 
+data = load_boston()
+X, Y = data["data"], data["target"]
+X_train,X_test,Y_train,Y_test = train_test_split(X, Y, test_size = 0.2)
 
-(x_train, y_train),(x_test, y_test) = boston_housing.load_data()
-ptratio = x_train[:, 10]
-lstat = x_train[:, 12]
-x_train = np.c_[ptratio, lstat]#getting only the features that we need
+
+#(x_train, y_train),(x_test, y_test) = boston_housing.load_data()
+ptratio = X_train[:, 10]
+lstat = X_train[:, 12]
+#x_train = np.c_[ptratio, lstat]#getting only the features that we need
 #x_train = x_train.T
 
-x_test = np.c_[x_test[:, 10], x_test[:, 12]]
+print(np.shape(X_train))
+
+#x_test = np.c_[x_test[:, 10], x_test[:, 12]]
 #x_test = x_test.T
-y_train_shaped = np.reshape(y_train, (404, 1))
+y_train_shaped = np.reshape(Y_train, (404, 1))
 #-----------------------------------------------------------------------------------------------------------------------
 
 
 #-------------------------------------------------Training network------------------------------------------------------
 
 network = [
-    dense.FC_layer(2, 5),
+    dense.FC_layer(13, 5),
     activation.relu(),
     dense.FC_layer(5, 5),
     activation.relu(),
     dense.FC_layer(5, 1),
     activation.linear()
 ]
-layer_1 = dense.FC_layer(2, 5)
+layer_1 = dense.FC_layer(13, 5)
 layer_1_activation = activation.relu()
 layer_2 = dense.FC_layer(5, 5)
 layer_2_activation = activation.relu()
@@ -45,12 +53,14 @@ y_preds = []
 losses = []
 epochs = []
 l1_w = layer_3.weights
-n = len(y_train)
+n = len(Y_train)
 
-def predict(network, input):
+def predict(network, input, epoch):
     output = input
+    layer_num = 0
     for layer in network:
-        output = layer.forward(output, .03)
+        output = layer.forward(output, epoch, layer_num, .03)
+        layer_num += 1
     return output
 
 
@@ -62,14 +72,14 @@ for i in range(e):
         x_initial = np.reshape(x_train[x, :], (2, 1))
         y = y_train[x]'''
 
-    output = predict(network, x_train.T)
+    output = predict(network, X_train.T, i)
 
     # error
-    error += final_loss.mean_squared_error(output, y_train.T)
+    error += final_loss.mean_squared_error(output, Y_train.T)
     losses.append(error)
 
     # backward
-    grad = final_loss.mean_squared_error_prime(output, y_train.T)
+    grad = final_loss.mean_squared_error_prime(output, Y_train.T)
     layer_num = len(network)
     for layer in reversed(network):
         grad = layer.backward(grad, i, layer_num, network, y_train_shaped, .03)
@@ -113,7 +123,7 @@ for i in range(e):
         #print("layer1 weight changes", layer_1.dLdW)
         '''
 
-for x in x_train:
+for x in X_train:
     x = np.reshape(x, (2, 1))
     prediction = predict(network, x)
     y_preds.append(prediction)
@@ -123,7 +133,7 @@ print(np.shape(y_preds))
 
 plt.figure()
 plt.scatter(lstat, y_preds, c="Red")
-plt.scatter(lstat, y_train)
+plt.scatter(lstat, Y_train)
 
 print(epochs)
 plt.figure()
@@ -132,7 +142,7 @@ print(losses)
 
 
 plt.figure()
-plt.scatter(ptratio, y_train)
+plt.scatter(ptratio, Y_train)
 plt.scatter(ptratio, y_preds, c='Red')
 
 plt.show()

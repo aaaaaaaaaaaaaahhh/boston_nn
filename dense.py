@@ -16,12 +16,16 @@ class FC_layer:
         # d is number of dimensions to the data and n is the number of data points
         # being fed through(batch size)
         self.m = nodes  # number of nodes
-        self.weights = np.random.randn(nodes, input_size) - .5# d by m
-        self.biases = np.random.randn(nodes, 1) - .5
+        self.weights = np.random.randn(nodes, input_size)*.01# d by m
+        self.biases = np.random.randn(nodes, 1)*.01
 
-    def forward(self, input, lr):
+    def forward(self, input, epoch, layer, lr):
         self.x = input
         self.z = np.dot(self.weights, self.x) + self.biases # the reshape is to make the array compatible with the biases. only
+        print('x', epoch, layer, input)
+        print('z', epoch, layer, self.z)
+        print('w', epoch, layer, self.weights)
+        print('b', epoch, layer, self.biases)
         return self.z
 
     def backward(self, output_error, epoch, layer, network, y_train, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
@@ -34,13 +38,14 @@ class FC_layer:
         if layer == layers:
             self.dldA = 1/m * (activation.relu.forward(self.z, .03) - y_train)
         else:
-            self.dLdA = np.dot(self.weights.T, output_error)
+            #self.dLdA = np.dot(self.weights.T, output_error)
+            pass
 
-        self.dLdW = np.dot(output_error, self.x.T)
-        self.dLdW0 = np.sum(output_error, axis=1, keepdims=True)# m by n (same size as dLdZ)
-        print("dLdW", epoch, layer, self.dLdW)
-        print("dLdA", epoch, self.dLdA)
-        print("dLdW0", epoch, self.dLdW0)
+        #self.dLdW = 1/m * np.dot(output_error, self.x.T)
+        self.dLdW0 = 1/m * np.sum(output_error, axis=0, keepdims=True)# m by n (same size as dLdZ)
+        #print("dLdW", epoch, layer, self.dLdW)
+        print("dLdW0", epoch, layer, self.dLdW0)
+        print("dLdA", epoch, layer, self.dLdA)
         #self.dLdW0 = output_error
         #print("dldw", self.dLdW)
         #print("shape of dLdA, in linear", np.shape(self.dLdA))
