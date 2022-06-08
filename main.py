@@ -8,6 +8,14 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.datasets import boston_housing
 import matplotlib.pyplot as plt
 
+'''
+All of this is my own code, but I have taken some ideas from other projects related to mine. This is suppose to predict
+the house price of houses in boston using 13 parameters about that house. You can go look at them more at https://www.kaggle.com/code/prasadperera/the-boston-housing-dataset/notebook
+
+My program does not work currently, all of the guesses eventually go to infinity or Nan, but there are other programs by
+other people that I have used to help me that I have cloned on my github if you would like to go and see them.
+
+'''
 
 #----------------------------------------------Preprocessing data-------------------------------------------------------
 
@@ -132,18 +140,18 @@ for x in X_train:
 print(np.shape(y_preds))
 
 plt.figure()
-plt.scatter(lstat, y_preds, c="Red")
-plt.scatter(lstat, Y_train)
+plt.scatter(lstat, y_preds, c="Red")  # predictions related to one of the parameters of the house. it is in red
+plt.scatter(lstat, Y_train)  # actual
 
 print(epochs)
 plt.figure()
-plt.plot(epochs, losses)
+plt.plot(epochs, losses)  # losses
 print(losses)
 
 
 plt.figure()
-plt.scatter(ptratio, Y_train)
-plt.scatter(ptratio, y_preds, c='Red')
+plt.scatter(ptratio, Y_train)  # actual
+plt.scatter(ptratio, y_preds, c='Red')  # predictions against another of the houses. it is in red
 
 plt.show()
 
