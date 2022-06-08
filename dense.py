@@ -4,7 +4,6 @@ import activation
 # if you dont get any of the derivation, dont worry i dont really get them either.
 # go to https://openlearninglibrary.mit.edu/courses/course-v1:MITx+6.036+1T2019/courseware/Week7/week7_homework/?activate_block_id=block-v1%3AMITx%2B6.036%2B1T2019%2Btype%40sequential%2Bblock%40week7_homework
 
-np.random.seed(6)
 
 x = np.array([[1, 2, 3, 2.5],
               [2.0, 5.0, -1.0, 2.0],
@@ -35,15 +34,19 @@ class FC_layer:
         #print("shape of x, in linear", np.shape(self.x))
         layers = len(network)
         m = len(y_train)
-        if layer == layers:
-            self.dldA = 1/m * (activation.relu.forward(self.z, .03) - y_train)
-        else:
-            #self.dLdA = np.dot(self.weights.T, output_error)
-            pass
+        #print("dLdA test", 1 / m * (self.z - y_train))
+        if layer == layers-1:
+            self.dLdA = 1/m * (self.z - y_train.T)
+            print("dL d A", epoch, layer, self.dLdA)
 
-        #self.dLdW = 1/m * np.dot(output_error, self.x.T)
-        self.dLdW0 = 1/m * np.sum(output_error, axis=0, keepdims=True)# m by n (same size as dLdZ)
-        #print("dLdW", epoch, layer, self.dLdW)
+        else:
+            self.dLdA = np.dot(self.weights.T, output_error)
+            output_error = np.multiply(self.dLdA, np.where(self.z>=0, 1, 0))
+            print("dLd A", epoch, layer, self.dLdA)
+
+        self.dLdW = 1/m * np.dot(output_error, self.x.T)
+        self.dLdW0 = 1/m * np.sum(self.dLdA, axis=1, keepdims=True)# m by n (same size as dLdZ)
+        print("dLdW", epoch, layer, self.dLdW)
         print("dLdW0", epoch, layer, self.dLdW0)
         print("dLdA", epoch, layer, self.dLdA)
         #self.dLdW0 = output_error
