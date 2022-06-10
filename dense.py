@@ -21,10 +21,10 @@ class FC_layer:
     def forward(self, input, epoch, layer, lr):
         self.x = input
         self.z = np.dot(self.weights, self.x) + self.biases # the reshape is to make the array compatible with the biases. only
-        print('x', epoch, layer, input)
-        print('z', epoch, layer, self.z)
-        print('w', epoch, layer, self.weights)
-        print('b', epoch, layer, self.biases)
+        #print('x', epoch, layer, input)
+        #print('z', epoch, layer, self.z)
+        #print('w', epoch, layer, self.weights)
+        #print('b', epoch, layer, self.biases)
         return self.z
 
     def backward(self, output_error, epoch, layer, network, y_train, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
@@ -35,20 +35,23 @@ class FC_layer:
         layers = len(network)
         m = len(y_train)
         #print("dLdA test", 1 / m * (self.z - y_train))
-        if layer == layers-1:
+        if layer == layers:
             self.dLdA = 1/m * (self.z - y_train.T)
-            print("dL d A", epoch, layer, self.dLdA)
+            #print("dL d A", epoch, layer, self.dLdA)
 
         else:
-            self.dLdA = np.dot(self.weights.T, output_error)
+            #print(np.shape(self.weights.T), np.shape(output_error))
+            #print(layers, layer)
+            self.dLdA = np.dot(network[layer].weights.T, output_error)
             output_error = np.multiply(self.dLdA, np.where(self.z>=0, 1, 0))
-            print("dLd A", epoch, layer, self.dLdA)
+            #print("dLd A", epoch, layer, self.dLdA)
 
         self.dLdW = 1/m * np.dot(output_error, self.x.T)
         self.dLdW0 = 1/m * np.sum(self.dLdA, axis=1, keepdims=True)# m by n (same size as dLdZ)
-        print("dLdW", epoch, layer, self.dLdW)
-        print("dLdW0", epoch, layer, self.dLdW0)
-        print("dLdA", epoch, layer, self.dLdA)
+        #print("dLdA shape", np.shape(self.dLdA))
+        #print("dLdW", epoch, layer, self.dLdW)
+        #print("dLdW0", epoch, layer, self.dLdW0)
+        #print("dLdA", epoch, layer, self.dLdA)
         #self.dLdW0 = output_error
         #print("dldw", self.dLdW)
         #print("shape of dLdA, in linear", np.shape(self.dLdA))

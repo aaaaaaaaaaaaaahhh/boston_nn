@@ -42,21 +42,21 @@ y_train_shaped = np.reshape(Y_train, (404, 1))
 
 network = [
     dense.FC_layer(13, 5),
-    activation.relu(),
+    #activation.relu(),
     dense.FC_layer(5, 5),
-    activation.relu(),
+    #activation.relu(),
     dense.FC_layer(5, 1),
-    activation.linear()
+    #activation.linear()
 ]
 layer_1 = dense.FC_layer(13, 5)
-layer_1_activation = activation.relu()
+#layer_1_activation = activation.relu()
 layer_2 = dense.FC_layer(5, 5)
-layer_2_activation = activation.relu()
+#layer_2_activation = activation.relu()
 layer_3 = dense.FC_layer(5, 1)
-layer_3_activation = activation.linear()
+#layer_3_activation = activation.linear()
 final_loss = loss.loss()
 
-e = 1000
+e = 905
 y_preds = []
 losses = []
 epochs = []
@@ -131,10 +131,9 @@ for i in range(e):
         #print("layer1 weight changes", layer_1.dLdW)
         '''
 
-for x in X_train:
-    x = np.reshape(x, (2, 1))
-    prediction = predict(network, x)
-    y_preds.append(prediction)
+
+prediction = predict(network, X_train.T, None)
+y_preds.append(prediction)
 
 
 print(np.shape(y_preds))
