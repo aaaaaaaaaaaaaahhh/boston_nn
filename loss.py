@@ -11,7 +11,7 @@ class loss:
         dLdY = y_pred - self.y
         return dLdY
 
-    def root_mean_squared_error(self, y_pred, y, n):
+    def root_mean_squared_error(self, y_pred, y):
         #return 1 / (2 * len(y)) * np.sum(np.square(y_pred - y))
         return math.sqrt(np.mean(np.sum((y-y_pred)**2, 0)))
 

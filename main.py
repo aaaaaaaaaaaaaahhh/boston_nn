@@ -56,7 +56,7 @@ layer_3 = dense.FC_layer(5, 1)
 #layer_3_activation = activation.linear()
 final_loss = loss.loss()
 
-e = 905
+e = 50000
 y_preds = []
 losses = []
 epochs = []
@@ -84,7 +84,7 @@ for i in range(e):
 
     # error
     error += final_loss.mean_squared_error(output, Y_train.T)
-    losses.append(error)
+    losses.append(final_loss.root_mean_squared_error(output, Y_train.T))
 
     # backward
     grad = final_loss.mean_squared_error_prime(output, Y_train.T)
@@ -136,16 +136,15 @@ prediction = predict(network, X_train.T, None)
 y_preds.append(prediction)
 
 
-print(np.shape(y_preds))
 
 plt.figure()
 plt.scatter(lstat, y_preds, c="Red")  # predictions related to one of the parameters of the house. it is in red
 plt.scatter(lstat, Y_train)  # actual
 
-print(epochs)
 plt.figure()
 plt.plot(epochs, losses)  # losses
 print(losses)
+
 
 
 plt.figure()
