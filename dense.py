@@ -28,7 +28,7 @@ class FC_layer:
         #print('b', epoch, layer, self.biases)
         return self.a
 
-    def backward(self, output_error, epoch, layer, network, y_train, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
+    def backward(self, output_error, epoch, layer, network, y_train, x_train, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
         #print("shape of output error, in linear", np.shape(output_error))
         #print("shape of biases, in linear", np.shape(self.biases))
         #print("shape of weights, in linear", np.shape(self.weights))
@@ -37,7 +37,8 @@ class FC_layer:
         m = len(y_train)
         #print("dLdA test", 1 / m * (self.z - y_train))
         if layer == layers:
-            self.dLdA = 1/m * (self.z - y_train.T)
+            self.dLdA = 1/m * (self.a - y_train.T)
+            output_error = self.dLdA
             #print("dL d A", epoch, layer, self.dLdA)
             #print('output error', epoch, layer, output_error)
         else:
@@ -48,8 +49,12 @@ class FC_layer:
             #print('output error', epoch, layer, output_error)
             #print("dLd A", epoch, layer, self.dLdA)
 
-        self.dLdW = 1/m * np.dot(output_error, self.x.T)
-        self.dLdW0 = 1/m * np.sum(self.dLdA, axis=1, keepdims=True)# m by n (same size as dLdZ)
+        if layer == 1:
+            self.dLdW = 1 / m * np.dot(output_error, x_train)
+        else:
+            self.dLdW = 1 / m * np.dot(output_error, network[layer - 1].a.T)
+
+        self.dLdW0 = 1/m * np.sum(output_error, axis=1, keepdims=True)# m by n (same size as dLdZ)
         #print("dLdA shape", np.shape(self.dLdA))
         #print("dLdW", epoch, layer, self.dLdW)
         #print("dLdW0", epoch, layer, self.dLdW0)
