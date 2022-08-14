@@ -7,6 +7,7 @@ from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.datasets import boston_housing
 import matplotlib.pyplot as plt
+import math
 
 '''
 All of this is my own code, but I have taken some ideas from other projects related to mine. This is suppose to predict
@@ -56,7 +57,7 @@ layer_3 = dense.FC_layer(5, 1)
 #layer_3_activation = activation.linear()
 final_loss = loss.loss()
 
-e = 50000
+e = 100000
 y_preds = []
 losses = []
 epochs = []
@@ -71,6 +72,10 @@ def predict(network, input, epoch):
         layer_num += 1
     return output
 
+def standardize(data):
+    mean = np.sum(data)/np.size(data)
+    sd = math.sqrt(np.sum(np.square(data-mean))/np.size(data))
+    return (data-mean)/sd
 
 for i in range(e):
     error = 0
@@ -81,6 +86,8 @@ for i in range(e):
         y = y_train[x]'''
 
     output = predict(network, X_train.T, i)
+    #output = standardize(output)
+
 
     # error
     error += final_loss.mean_squared_error(output, Y_train.T)
@@ -135,7 +142,7 @@ for i in range(e):
 prediction = predict(network, X_train.T, None)
 y_preds.append(prediction)
 
-
+print(np.shape(lstat), np.shape(y_preds))
 
 plt.figure()
 plt.scatter(lstat, y_preds, c="Red")  # predictions related to one of the parameters of the house. it is in red

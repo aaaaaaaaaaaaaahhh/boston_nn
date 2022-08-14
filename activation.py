@@ -9,7 +9,7 @@ class relu:
         return self.A
 
     def backward(self, dLdA, epoch, layer_num, network, y_train_shaped, lr):
-        return dLdA * (self.A != 0)
+        return np.multiply(dLdA, np.where(self.A>=0, 1, 0))
 
 
 class softmax:
