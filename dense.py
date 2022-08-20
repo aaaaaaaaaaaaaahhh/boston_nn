@@ -21,7 +21,6 @@ class FC_layer:
     def forward(self, input, epoch, layer, lr):
         self.x = input
         self.z = np.dot(self.weights, self.x) + self.biases # the reshape is to make the array compatible with the biases. only
-        self.a = np.maximum(0, self.z)
 
         '''
         self.x = input
@@ -36,9 +35,9 @@ class FC_layer:
         #print('b', epoch, layer, self.biases)
         #print("shape of b, in linear", np.shape(self.biases))
         #print(" ")
-        return self.a
+        return self.z
 
-    def backward(self, output_error, epoch, layer, network, y_train, x_train, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
+    def backward(self, output_error, epoch, layer, network, y_train, learning_rate=.03):  # dLdZ is of size m(l+1) by n(l+1)
         #print("shape of output error, in linear", np.shape(output_error))
         #print("shape of biases, in linear", np.shape(self.biases))
         #print("shape of weights, in linear", np.shape(self.weights))

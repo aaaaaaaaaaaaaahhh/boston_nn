@@ -5,7 +5,7 @@ class relu:
     def forward(self, input, epoch, layer, lr):
         self.input = input
         self.A = np.maximum(0, input)
-        print('a_relu', epoch, layer, self.A)
+        #print('a_relu', epoch, layer, self.A)
         return self.A
 
     def backward(self, dLdA, epoch, layer_num, network, y_train_shaped, lr):
@@ -28,7 +28,8 @@ class linear:
         return input
 
     def backward(self, input, epoch, layer_num, network, y_train_shaped, lr):
-        return np.ones(input.shape, dtype=float)
+        #return input
+        return [[1]]
 
 
 class tanh:
