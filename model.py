@@ -5,18 +5,9 @@ import loss
 
 from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.datasets import boston_housing
 import matplotlib.pyplot as plt
 import math
 
-'''
-All of this is my own code, but I have taken some ideas from other projects related to mine. This is suppose to predict
-the house price of houses in boston using 13 parameters about that house. You can go look at them more at https://www.kaggle.com/code/prasadperera/the-boston-housing-dataset/notebook
-
-My program does not work currently, all of the guesses eventually go to infinity or Nan, but there are other programs by
-other people that I have used to help me that I have cloned on my github if you would like to go and see them.
-
-'''
 
 #----------------------------------------------Preprocessing data-------------------------------------------------------
 
@@ -24,39 +15,35 @@ data = load_boston()
 X, Y = data["data"], data["target"]
 X_train,X_test,Y_train,Y_test = train_test_split(X, Y, test_size = 0.2)
 
-print(np.shape(Y_test))
-#(x_train, y_train),(x_test, y_test) = boston_housing.load_data()
 ptratio = X_train[:, 10]
 ptratio_Xtest = X_test[:, 10]
 lstat = X_train[:, 12]
 lstat_Xtest = X_test[:, 12]
-#x_train = np.c_[ptratio, lstat]#getting only the features that we need
-#x_train = x_train.T
 
 
-#x_test = np.c_[x_test[:, 10], x_test[:, 12]]
-#x_test = x_test.T
 y_train_shaped = np.reshape(Y_train, (404, 1))
 #-----------------------------------------------------------------------------------------------------------------------
 
 
-#-------------------------------------------------Training network------------------------------------------------------
+#-------------------------------------------------Declaring Network------------------------------------------------------
 
 network = [
-    dense.FC_layer(13, 5),
-    activation.relu(),
-    dense.FC_layer(5, 5),
-    activation.relu(),
-    dense.FC_layer(5, 1),
+    dense.FCLayer(13, 5),
+    activation.Relu(),
+    dense.FCLayer(5, 5),
+    activation.Relu(),
+    dense.FCLayer(5, 1),
 ]
 
-final_loss = loss.loss()
+final_loss = loss.Mse()
 
-e = 100000
+e = 50000
 losses = []
 epochs = []
-n = len(Y_train)
+#-----------------------------------------------------------------------------------------------------------------------
+
 #-----------------------------------------------------Functions---------------------------------------------------------
+
 
 def predict(network, input, epoch):
     output = input
@@ -66,7 +53,8 @@ def predict(network, input, epoch):
         layer_num += 1
     return output
 
-def standardize(data): # for standardizing either the input or output of the network. not used in the current model
+
+def standardize(data):  # for standardizing either the input or output of the network. not used in the current model
     mean = np.sum(data)/np.size(data)
     sd = math.sqrt(np.sum(np.square(data-mean))/np.size(data))
     return (data-mean)/sd
@@ -80,23 +68,23 @@ for i in range(e):
 
     output = predict(network, X_train.T, i) # forward propagation
 
-    error += final_loss.mean_squared_error(output, Y_train.T) # error computation
-    losses.append(final_loss.root_mean_squared_error(output, Y_train.T))
+    error += final_loss.mse(output, Y_train.T) # error computation, currently not used
+    losses.append(final_loss.root_mse(output, Y_train.T))
 
     # backpropagation
-    grad = final_loss.mean_squared_error_prime(output, Y_train.T)
+    grad = final_loss.mse_prime(output, Y_train.T)
     layer_num = len(network)
     for layer in reversed(network):
-        grad = layer.backward(grad, i, layer_num, network, y_train_shaped, .03)
+        grad = layer.backward(grad, i, layer_num, .03)
         layer_num = layer_num - 1
 
 #-----------------------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------Plotting Data----------------------------------------------------------
 prediction = predict(network, X_train.T, None)# getting final prediction
-training_loss = final_loss.mean_squared_error(prediction, Y_train.T)
+training_loss = final_loss.mse(prediction, Y_train.T)
 prediction_test = predict(network, X_test.T, None)
-test_loss = final_loss.mean_squared_error(prediction_test, Y_test.T)
+test_loss = final_loss.mse(prediction_test, Y_test.T)
 print("training loss", training_loss)
 print("test loss", test_loss)
 
