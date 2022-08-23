@@ -1,3 +1,0 @@
-# Project Description
-
-This repository is a school project in which I made a Neural Network model from scratch. I used OOP to make it usable to other network dimensions, as well as provided some activation and loss functions. It's current purpose is to learn the correct price of a house from the popular boston housing dataset which you can go learn more about **[here](https://www.kaggle.com/code/prasadperera/the-boston-housing-dataset/notebook)**.
