@@ -1,5 +1,5 @@
 # Project Description
-___
+
 This repository is a school project in which I made a Neural 
 Network model from scratch. I used OOP to make it usable to 
 other network dimensions, as well as provided some activation
@@ -9,7 +9,7 @@ can go learn more about
 **[here](https://www.kaggle.com/code/prasadperera/the-boston-housing-dataset/notebook)**.
 
 # Project Overview
-___
+
 - ## Goal
   - The goal of this project was to use a Neural Network to predict house prices
   of a dataset of house in Boston using the 13 variables about each house in
@@ -28,6 +28,6 @@ ___
 
 
 # Sources
-___
+
 1. https://medium.com/@thevie/predicting-boston-housing-prices-step-by-step-linear-regression-tutorial-from-scratch-in-python-c50a09b70b22
 2. https://www.kaggle.com/code/prasadperera/the-boston-housing-dataset/notebook
