@@ -29,7 +29,7 @@ can go learn more about
   - ### Fully Connected Layer
     - Each Fully Connected Layer(FC Layer for short) consists of a 
     `forward` and `backward` function, the first of which finds the 
-    dot product of the input and the weights and adds the bias $W^{T}\cdotX+b$, similar
+    dot product of the input and the weights and adds the bias $W^{T}*X+b$, similar
     to the equation of a line $m*x+b$. 
 - ## Result
 
