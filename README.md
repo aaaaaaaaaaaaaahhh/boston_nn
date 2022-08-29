@@ -29,8 +29,8 @@ can go learn more about
   - ### Fully Connected Layer
     - Each Fully Connected Layer(FC Layer for short) consists of a 
     `forward` and `backward` function, the first of which finds the 
-    dot product of the input and the weights and adds the bias, similar
-    to the equation of a line. $this_{is}$
+    dot product of the input and the weights and adds the bias $W^{T}dotX+b$, similar
+    to the equation of a line$m*x+b$. 
 - ## Result
 
 
@@ -41,4 +41,4 @@ can go learn more about
 2. https://www.kaggle.com/code/prasadperera/the-boston-housing-dataset/notebook
 3. http://alexlenail.me/NN-SVG/index.html
 
-$thing$
+
