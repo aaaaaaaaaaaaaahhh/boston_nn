@@ -32,7 +32,7 @@ can go learn more about
     dot product of the input and the weights and adds the bias $W^{T}X+b$, similar
     to the equation of a line $m*x+b$. The backward function finds the 
     partial derivative of the loss with respect to the weights and 
-    biases( ${dL}/{dW}$ ), as well as passing the partial derivative of the loss 
+    biases( $${dL}/{dW}$$ ), as well as passing the partial derivative of the loss 
     with respect to the input back to the layer behind. 
     
 - ## Result
