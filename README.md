@@ -23,6 +23,14 @@ can go learn more about
   `mdev`. I also stored the losses of the network as it trained and plotted
   those against the epochs to make sure they were going down.
 - ## Model
+  - My model consists of only 2 types of layers, Fully Connected layers
+  and Relu activation layers. In addition to these layers I used the
+  Mean Squared Error function for my loss. 
+  - ### Fully Connected Layer
+    - Each Fully Connected Layer(FC Layer for short) consists of a 
+    `forward` and `backward` function, the first of which finds the 
+    dot product of the input and the weights and adds the bias, similar
+    to the equation of a line. $this_{is}$
 - ## Result
 
 
@@ -31,3 +39,6 @@ can go learn more about
 
 1. https://medium.com/@thevie/predicting-boston-housing-prices-step-by-step-linear-regression-tutorial-from-scratch-in-python-c50a09b70b22
 2. https://www.kaggle.com/code/prasadperera/the-boston-housing-dataset/notebook
+3. http://alexlenail.me/NN-SVG/index.html
+
+$thing$
