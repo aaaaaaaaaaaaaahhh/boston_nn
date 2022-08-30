@@ -26,7 +26,7 @@ can go learn more about
   - My model consists of only 2 types of layers, Fully Connected layers
   and Relu activation layers. In addition to these layers I used the
   Mean Squared Error function for my loss.
-  - ![neural net](neural net.png) This 
+  - ![neural net](https://github.com/aaaaaaaaaaaaaahhh/boston_nn/blob/master/neural%20net.png) This 
   first layer has 13 nodes for the 13 parameters for each datapoint. It gets
   multiplied with the weights and added to the bias, and then goes to 
   the second layer which is Relu. The second and third rows of nodes
@@ -62,7 +62,7 @@ can go learn more about
   ![lstat results](https://github.com/aaaaaaaaaaaaaahhh/boston_nn/blob/master/lstat%20results.png)
   - Another indicator of a properly learning neural net is a gradual
   downward curve of the loss over the epochs
-  ![loss vs epochs](losses vs epochs.png)
+  ![loss vs epochs](https://github.com/aaaaaaaaaaaaaahhh/boston_nn/blob/master/losses%20vs%20epochs.png)
   
 
 
