@@ -82,9 +82,9 @@ for i in range(e):
 
 #----------------------------------------------Plotting Data----------------------------------------------------------
 prediction = predict(network, X_train.T, None)# getting final prediction
-training_loss = final_loss.mse(prediction, Y_train.T)
+training_loss = final_loss.root_mse(prediction, Y_train.T)
 prediction_test = predict(network, X_test.T, None)
-test_loss = final_loss.mse(prediction_test, Y_test.T)
+test_loss = final_loss.root_mse(prediction_test, Y_test.T)
 print("training loss", training_loss)
 print("test loss", test_loss)
 

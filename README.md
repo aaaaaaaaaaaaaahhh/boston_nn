@@ -50,7 +50,20 @@ can go learn more about
     remain the same.
     
 - ## Result
-
+  - After running the model through forward and backward propagation
+  50000 times, it has successfully learned the data set. The loss on the
+  training data(data only used for the training of the model) is 6.53
+  and the loss on the test data is 7.87. These numbers are good and all
+  but to show you that it really has learned the data set, I took the
+  models predictions and compared them to 2 of the parameters in the dataset
+  - Below is a graph of the predictions vs the actual data where
+  the x-axis is the lstat parameter and the y-axis is the actual house
+  prices(blue) or the models predictions(red).
+  ![lstat results](/home/stickymangoes/Pictures/lstat results.png)
+  - Another indicator of a properly learning neural net is a gradual
+  downward curve of the loss over the epochs
+  ![loss vs epochs](/home/stickymangoes/Pictures/losses vs epochs.png)
+  
 
 
 # Sources
