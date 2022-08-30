@@ -59,7 +59,7 @@ can go learn more about
   - Below is a graph of the predictions vs the actual data where
   the x-axis is the lstat parameter and the y-axis is the actual house
   prices(blue) or the models predictions(red).
-  ![lstat results](lstat results.png)
+  ![lstat results](https://github.com/aaaaaaaaaaaaaahhh/boston_nn/blob/master/lstat%20results.png)
   - Another indicator of a properly learning neural net is a gradual
   downward curve of the loss over the epochs
   ![loss vs epochs](losses vs epochs.png)
