@@ -26,7 +26,7 @@ can go learn more about
   - My model consists of only 2 types of layers, Fully Connected layers
   and Relu activation layers. In addition to these layers I used the
   Mean Squared Error function for my loss.
-  - ![neural net](/home/stickymangoes/PycharmProjects/boston_nn/neural net.png) This 
+  - ![neural net](neural net.png) This 
   first layer has 13 nodes for the 13 parameters for each datapoint. It gets
   multiplied with the weights and added to the bias, and then goes to 
   the second layer which is Relu. The second and third rows of nodes
@@ -59,10 +59,10 @@ can go learn more about
   - Below is a graph of the predictions vs the actual data where
   the x-axis is the lstat parameter and the y-axis is the actual house
   prices(blue) or the models predictions(red).
-  ![lstat results](/home/stickymangoes/PycharmProjects/boston_nn/lstat results.png)
+  ![lstat results](lstat results.png)
   - Another indicator of a properly learning neural net is a gradual
   downward curve of the loss over the epochs
-  ![loss vs epochs](/home/stickymangoes/PycharmProjects/boston_nn/losses vs epochs.png)
+  ![loss vs epochs](losses vs epochs.png)
   
 
 
