@@ -25,15 +25,29 @@ can go learn more about
 - ## Model
   - My model consists of only 2 types of layers, Fully Connected layers
   and Relu activation layers. In addition to these layers I used the
-  Mean Squared Error function for my loss. 
+  Mean Squared Error function for my loss.
+  - ![neural net](/home/stickymangoes/Pictures/neural net.png) This 
+  first layer has 13 nodes for the 13 parameters for each datapoint. It gets
+  multiplied with the weights and added to the bias, and then goes to 
+  the second layer which is Relu. The second and third rows of nodes
+  represent the Relu activation function, with the nodes not connected
+  to the previous layer being the biases added in the Fully Connected
+  Layers. The final node is the output, which will be compared to the
+  actual value in the training set and give an error for backpropagation.
   - ### Fully Connected Layer
     - Each Fully Connected Layer(FC Layer for short) consists of a 
     `forward` and `backward` function, the first of which finds the 
     dot product of the input and the weights and adds the bias $W^{T}X+b$, similar
     to the equation of a line $m*x+b$. The backward function finds the 
     partial derivative of the loss with respect to the weights and 
-    biases( $${dL}/{dW}$$ ), as well as passing the partial derivative of the loss 
-    with respect to the input back to the layer behind. 
+    biases(`dLdW` and `dLdW0`), as well as passing the partial derivative of the loss 
+    with respect to the input(`dLdA`) back to the layer behind.
+  - ### Relu Activation Layer
+    - The Activation Layer takes a linear vector or matrix and 
+    applies a non-linear function to it, in this case, the Rectified
+    Linear function. ![Relu](https://miro.medium.com/max/1400/1*DfMRHwxY1gyyDmrIAd-gjQ.png)
+    This function maps negative inputs to 0 and lets positive inputs
+    remain the same.
     
 - ## Result
 
